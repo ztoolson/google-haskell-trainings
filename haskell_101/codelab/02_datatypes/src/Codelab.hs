@@ -37,7 +37,7 @@ data Minutes = Minutes Int
 --
 --     div a b
 hours :: Minutes -> Int
-hours m = codelab
+hours (Minutes x) = x `div` 60
 
 -- In case you need some mathematical functions, you can use
 --
@@ -49,7 +49,7 @@ hours m = codelab
 -- Distance here means the number of minutes to get from m1 to m2.  For
 -- example, for 15 and 25, distance is 10.
 timeDistance :: Minutes -> Minutes -> Minutes
-timeDistance m1 m2 = codelab
+timeDistance (Minutes m1) (Minutes m2) = Minutes (abs $ m2 - m1)
 
 type Point = (Int, Int)
 
@@ -64,4 +64,7 @@ type Point = (Int, Int)
 --     f :: Point -> Int
 --     f (x, y) = abs x + abs y
 pointDistance :: Point -> Point -> Double
-pointDistance p1 p2 = codelab
+pointDistance (x1, y1) (x2, y2) = sqrt $ fromIntegral (xDiff^2 + yDiff^2)
+    where
+        xDiff = x2 - x1
+        yDiff = y2 - y1
