@@ -19,6 +19,9 @@ FROM haskell:8.10.7
 RUN apt-get update && \
      apt-get install -y vim
 
+RUN apt-get update && apt-get install -y curl
+RUN curl -sSL https://get.haskellstack.org/ | sh
+
 WORKDIR /google/trainings/haskell-101
 
 # Copy all cabal dependencies files only, fetched from docker-context
