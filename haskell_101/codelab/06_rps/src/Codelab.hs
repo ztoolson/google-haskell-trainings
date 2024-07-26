@@ -81,10 +81,21 @@ combine (a1, a2) (b1, b2) = (a1 + b1, a2 + b2)
 --     map          :: (a -> b) -> [a] -> [b]
 --     zip          :: [a] -> [b] -> [(a, b)]
 pairScore :: (Hand, Hand) -> Score
-pairScore = codelab codelab
+pairScore (h1, h2) = computeScore h1 h2
+-- pairScore = uncurry computeScore
+
+-- my work
+-- pairScore (Rock, Rock) -> (0, 0)
+-- pairScore (Rock, Scissors) -> (1, 0)
+
+
+-- score [Rock, Paper, Scissors] [Paper, Scissors, Rock]
+-- (zip) merge into [(Rock, Paper), (Paper, Scossors) (Scissors, Rock)]
+-- (map) with f = pairScore: [(0,1), (0,1), (0,1)]
+-- foldl1 reduce. f = combine, initial value = (0,0)
 
 score :: [Hand] -> [Hand] -> Score
-score h1 h2 = codelab codelab $ codelab codelab $ codelab h1 h2
+score h1 h2 = foldl1 combine $ map pairScore $ zip h1 h2
 -- Hint: It creates a list of plays by merging the two lists,
 --       then it scores each play,
 --       then it sums the scores.
@@ -100,15 +111,25 @@ score h1 h2 = codelab codelab $ codelab codelab $ codelab h1 h2
 
 -- This is a lazily evaluated list - the first value is 0, the second value is
 -- 1, and subsequent values are calculated (lazily) by the given expression.
+-- AKA fibonnaci
 mystic :: [Integer]
 mystic = 0 : 1 : zipWith (+) mystic (tail mystic)
 
+-- mystic
+-- 0 : 1 : (+) 0 1 : (+) 1 ((+) 0 1) : 
+
 -- The /= operator below means "not equal", just like != in Java/C/Python/etc.
 -- Puzzle: would a `where` (instead of `let ... in ...`) work here?
+-- AKA sieve of eratosthenes
 valor :: [Integer]
 valor = let s l = head l : s [n | n <- tail l, (n `mod` head l) /= 0]
         in s [2..]
 
+valorWhere :: [Integer]
+valorWhere = s [2..]
+  where s l = head l : s [n | n <- tail l, (n `mod` head l) /= 0]
+
+-- AKA quick sort
 instinct :: [Int] -> [Int]
 instinct []     = []
 instinct (x:xs) = instinct [a | a <- xs, a < x] ++ [x] ++ instinct (filter (>= x) xs)
