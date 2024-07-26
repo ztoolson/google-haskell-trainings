@@ -1,4 +1,8 @@
 <!-- -*- fill-column: 75; -*- -->
+# NOTE: This is my copy of the [google repo](https://github.com/google/haskell-trainings). You probably want to go there.
+
+
+
 
 # Haskell training: 101 and 102.
 
