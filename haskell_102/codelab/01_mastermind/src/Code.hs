@@ -72,7 +72,7 @@ allCodes :: Int -> [Code]
 allCodes s
   | s <  0    = error "allCodes: size was lower than 0"
   | s == 0    = [[]]
-  | otherwise = [color:code | color <- allColors, code <- allCodes (s-1)]
+  | otherwise = [color:code | color <- allColors, code <- allCodes (s - 1)]
 
 
 -- Transforms a code into the corresponding map of Color to Int. To do so,
@@ -104,7 +104,7 @@ codeToMap code = foldr addColorToMap empty code
 -- (If this one seems complicated, try testing zip and zipWith in GHCI!)
 -- For bonus points, reimplement it with "filter" or with a list comprehension.
 countBlacks :: Code -> Code -> Int
-countBlacks c1 c2 = sum $ map fromEnum $ zipWith == c1 c2
+countBlacks c1 c2 = sum $ map fromEnum $ zipWith (==) c1 c2
 
 
 -- This one computes the total number of colors in common between two
@@ -116,18 +116,18 @@ countBlacks c1 c2 = sum $ map fromEnum $ zipWith == c1 c2
 --     map       :: (Color -> Int) -> [Color] -> [Int]
 --     sum       :: [Int] -> Int
 countTotal :: Code -> Code -> Int
-countTotal c1 c2 = codelab $ codelab compareColor codelab
+countTotal c1 c2 = sum $ map compareColor allColors
   where
     compareColor :: Color -> Int
-    compareColor color = min (codelab) (codelab)
+    compareColor color = min (getCount color cmap1) (getCount color cmap2)
     cmap1, cmap2 :: ColorMap
-    cmap1 = codelab c1
-    cmap2 = codelab c2
+    cmap1 = codeToMap c1
+    cmap2 = codeToMap c2
 
 -- Finally, "countScore" takes two codes and computes the score. :)
 countScore :: Code -> Code -> Score
-countScore c1 c2 = codelab
+countScore c1 c2 = Score black white
   where
-    black = codelab
-    total = codelab
-    white = codelab
+    black = countBlacks c1 c2
+    total = countTotal c1 c2
+    white = total - black
