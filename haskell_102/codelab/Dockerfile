@@ -1,7 +1,7 @@
 # Using haskell:8 instead of latest due to deprecation warning
 # on cabal
 FROM haskell:8
-WORKDIR .
+WORKDIR /app
 
 # Install Stack
 RUN apt-get update && apt-get install -y curl

@@ -4,32 +4,48 @@ services:
     build: .
     image: haskell102:latest
     command: make -C 00_setup
+    volumes:
+      - .:/app
   section_1:
     build: .
     image: haskell102:latest
     command: make -C 01_mastermind ARGS="check 1"
+    volumes:
+      - .:/app
   section_2:
     build: .
     image: haskell102:latest
     command: make -C 01_mastermind ARGS="check 2"
+    volumes:
+      - .:/app
   section_3:
     build: .
     image: haskell102:latest
     command: make -C 01_mastermind ARGS="check 3"
+    volumes:
+      - .:/app
   section_4:
     build: .
     image: haskell102:latest
     command: make -C 01_mastermind ARGS="check 4"
+    volumes:
+      - .:/app
   section_5:
     build: .
     image: haskell102:latest
     command: make -C 01_mastermind ARGS="check 5"
+    volumes:
+      - .:/app
   play:
     build: .
     image: haskell102:latest
     command: make -C 01_mastermind ARGS=play
     tty: true
+    volumes:
+      - .:/app
   solve:
     build: .
     image: haskell102:latest
     command: make -C 01_mastermind ARGS=solve
+    volumes:
+      - .:/app
