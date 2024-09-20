@@ -51,29 +51,29 @@ data ErrorOr a
 
 -- "wrapValue" takes a value, and puts it in the context of an "ErrorOr a".
 wrapValue :: a -> ErrorOr a
-wrapValue = codelab
+wrapValue a = Value a
 
 -- "fmapValue" takes a function, and tries to apply it on the value inside the
 -- "ErrorOr a". If it cannot apply the function because the "ErrorOr a" contains
 -- an error, it simply returns this existing error. We do a simple pattern match
 -- to decide what to do.
 fmapValue :: (a -> b) -> ErrorOr a -> ErrorOr b
-fmapValue _ (Error msg) = codelab
-fmapValue f (Value   x) = codelab
+fmapValue _ (Error msg) = Error msg
+fmapValue f (Value x) = Value (f x)
 
 -- "apValue" is the version of "ap" for our "ErrorOr" type. The first value is
 -- an "ErrorOr (a -> b)": if we indeed have a function in it, we can apply it on
 -- the second argument; if we don't, we simply keep the error. To apply the
 -- function, we will need a way to apply a function on a contextual value...
 apValue :: ErrorOr (a -> b) -> ErrorOr a -> ErrorOr b
-apValue (Error msg) _   = codelab
-apValue (Value   f) eoa = codelab
+apValue (Error msg) _   = Error msg
+apValue (Value   f) eoa = fmapValue f eoa
 
 -- Finally, "bindValue" is our version of "bind". It works exactly like
 -- "fmapValue", except we don't have to wrap the result.
 bindValue :: (a -> ErrorOr b) -> ErrorOr a -> ErrorOr b
-bindValue _ (Error msg) = codelab
-bindValue f (Value   x) = codelab
+bindValue _ (Error msg) = Error msg
+bindValue f (Value   x) = f x
 
 -- Using the functions declared in the Codelab, we can now write the instances
 -- of our three beloved typeclasses for ErrorOr.
@@ -103,4 +103,10 @@ instance Monad ErrorOr where
 
 -- Having ErrorOr, we can define a safe function to convert a Char to a Color.
 readColor :: Char -> ErrorOr Color
-readColor = codelab
+readColor 'R' = Value Red
+readColor 'Y' = Value Yellow
+readColor 'G' = Value Green
+readColor 'C' = Value Cyan
+readColor 'B' = Value Blue
+readColor 'M' = Value Magenta
+readColor c = Error $ show c <> " is not a proper color."
