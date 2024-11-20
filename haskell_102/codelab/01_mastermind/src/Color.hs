@@ -49,13 +49,18 @@ data Color
 allColors :: [Color]
 allColors = [minColor .. maxColor] -- this is enumFromTo minColor maxColor
   where
-    minColor = codelab
-    maxColor = codelab
+    minColor = Red
+    maxColor = Magenta
 
 -- We should also provide a way to display values of type Color.
 -- Let's make `show` return only the first letter of the color's name.
 instance Show Color where
-  show = codelab
+  show Red = "R"
+  show Yellow = "Y"
+  show Green = "G"
+  show Cyan = "C"
+  show Blue = "B"
+  show Magenta = "M"
 
 -- We will not write the Read instance to convert a String to a Color because
 -- read is partial and we want to handle the error case ourselves (see section

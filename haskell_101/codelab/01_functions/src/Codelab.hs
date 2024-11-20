@@ -28,22 +28,22 @@ import Prelude hiding (gcd)
 -- we have for now is numbers.
 
 add :: Int -> Int -> Int
-add x y = codelab
+add x y = x + y
 
 subtract :: Int -> Int -> Int
-subtract x y = codelab
+subtract x y = x - y
 
 double :: Int -> Int
-double x = codelab
+double x = 2*x
 
 multiply :: Int -> Int -> Int
-multiply x y = codelab
+multiply x y = x * y
 
 -- Note that Haskell is strict about types even for basic integral types.
 -- Int is never automatically converted to Double.  But you can use
 -- fromIntegral to convert from any integral type to any number type.
 divide :: Int -> Int -> Double
-divide x y = codelab
+divide x y = fromIntegral x / fromIntegral y
 
 -- Remember that you can use if/then/else:
 --
@@ -56,10 +56,16 @@ divide x y = codelab
 -- Remember that function application binds tighter than operators!
 -- E.g.: `3 * f 4` is the same as `3 * (f 4)`, not `(3 * f) 4`.
 factorial :: Integer -> Integer
-factorial n = codelab
+factorial 0 = 1
+factorial 1 = 1
+factorial n = n * factorial (n-1)
 
 -- Consider Euclid's algorithm:
 --
 --   https://en.wikipedia.org/wiki/Greatest_common_divisor#Using_Euclid's_algorithm
 gcd :: Int -> Int -> Int
-gcd a b = codelab
+gcd a b = if remainder == 0
+        then b
+        else gcd b remainder
+    where remainder = a `mod` b
+

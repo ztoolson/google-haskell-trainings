@@ -43,7 +43,7 @@ type ColorMap = Map Color Int
 -- matching, but there is a shorter way to implement it.
 -- See https://hackage.haskell.org/package/base/docs/Data-Maybe.html
 getIntOr0 :: Maybe Int -> Int
-getIntOr0 = codelab
+getIntOr0 m = fromMaybe 0 m
 
 -- "getCount" extracts a color count from a color map; if the color isn't
 -- in the map, it returns 0 instead.  To implement it, you will need a
@@ -51,7 +51,9 @@ getIntOr0 = codelab
 --
 --     lookup :: key -> Map key value -> Maybe value
 getCount :: Color -> ColorMap -> Int
-getCount color cmap = codelab
+getCount color cmap = getIntOr0 $ lookup color cmap 
+-- getCount color cmap =  length $ filter (== color) (Map.keys cmap)
+-- getCount color cmap = Map.findWithDefault 0 color cmap
 
 -- Increase the count of a color in the map by 1. Since a map is immutable,
 -- you in fact create a new one with the modification.  The two functions
@@ -62,4 +64,5 @@ getCount color cmap = codelab
 --
 -- For a fancier version, you can look up "insertWith".
 addColorToMap :: Color -> ColorMap -> ColorMap
-addColorToMap color cmap = codelab
+addColorToMap color cmap = insert color (currentCount+1) cmap
+    where currentCount = getCount color cmap

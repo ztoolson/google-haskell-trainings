@@ -37,35 +37,41 @@ import Prelude hiding (null, head, tail, length, and, or, (++))
 
 -- null tells you whether a list is empty or not
 null :: [a] -> Bool
-null fixme = codelab
+null [] = True
+null _ = False
 
 -- head returns the first element of the list.
 --
 -- On an empty list, head panics: functions that can panic are "partial"
 head :: [a] -> a
 head []    = error "head: empty list"
-head fixme = codelab
+head (x:_) = x
 
 -- tail returns everything but the first element.
 -- If the list is empty it panics
 tail :: [a] -> [a]
-tail = codelab
+tail [] = error "tail: empty list"
+tail (_:xs) = xs
 
 -- Do you remember it from the slides?
 length :: [a] -> Int
-length l = codelab
+length [] = 0
+length(_:xs) = 1 + length xs
 
 -- "and" returns True if all the boolean values in the list are True.
 -- What do you think it returns for an empty list?
 and :: [Bool] -> Bool
-and l = codelab
+and [] = True
+and (x:xs) = x && and xs
 
 -- "or" returns True if at least one value in the list is True.
 -- What do you think it returns for an empty list?
 or :: [Bool] -> Bool
-or l = codelab
+or [] = False
+or (x:xs) = x || or xs
 
 -- "(++)" is the concatenation operator.  To concatenate two linked lists
 -- you have to chain the second one at the end of the first one.
 (++) :: [a] -> [a] -> [a]
-l1 ++ l2 = codelab
+[] ++ l2 = l2
+(x:xs) ++ l2 = x: xs ++ l2

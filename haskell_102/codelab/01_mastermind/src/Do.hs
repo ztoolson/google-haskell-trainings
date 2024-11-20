@@ -48,11 +48,11 @@ import Internal (codelab)
 allCodesDo :: Int -> [Code]
 allCodesDo s
   | s <  0    = error "allCodes: size was lower than 0"
-  | s == 0    = codelab
+  | s == 0    = [[]]
   | otherwise = do
-      color <- codelab
-      code  <- codelab
-      return codelab
+      color <- allColors
+      code  <- allCodes (s - 1)
+      return $ color:code
 
 -- Unlike generators, a "do" block can return any wrapped value. For lists, it
 -- means it can return any list, not necessarily a list of length 1. Let's build
@@ -62,8 +62,8 @@ allCodesDo s
 --   [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 duplicatesList :: Int -> [Int]
 duplicatesList len = do
-  i <- [1..codelab]
-  codelab
+  i <- [1..len]
+  [i,i]
 
 -- What if we want the different "blocks" to have different lengths? Let's build
 -- a "generator" similar to the previous one, but that would duplicate only odd
@@ -74,7 +74,8 @@ duplicatesList len = do
 -- Do not forget about Hoogle, should you need a new function.
 oddlyDuplicateList :: Int -> [Int]
 oddlyDuplicateList len = do
-  codelab
+  i <- [1..len]
+  if even i then [i] else [i,i]
 
 -- Think about the fact that when coding in "do" notation you have the full
 -- power of the language, but you are building something like a generator. For
